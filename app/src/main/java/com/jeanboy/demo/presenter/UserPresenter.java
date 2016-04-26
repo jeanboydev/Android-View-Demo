@@ -1,18 +1,18 @@
-package com.jeanboy.demo.app.presenter;
+package com.jeanboy.demo.presenter;
 
-import com.jeanboy.demo.app.model.IUserModel;
-import com.jeanboy.demo.app.model.UserModel;
-import com.jeanboy.demo.app.view.IUserView;
+import com.jeanboy.demo.model.impl.UserModelImpl;
+import com.jeanboy.demo.model.UserModel;
+import com.jeanboy.demo.ui.view.UserView;
 
 /**
  * Created by JeanBoy on 2016/4/26.
  */
 public class UserPresenter {
 
-    private IUserView mUserView;
-    private IUserModel mUserModel;
+    private UserView mUserView;
+    private UserModelImpl mUserModel;
 
-    public UserPresenter(IUserView mUserView) {
+    public UserPresenter(UserView mUserView) {
         this.mUserView = mUserView;
         mUserModel = new UserModel();
     }

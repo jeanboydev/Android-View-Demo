@@ -1,4 +1,4 @@
-package com.jeanboy.demo.app.base;
+package com.jeanboy.demo.ui.base;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

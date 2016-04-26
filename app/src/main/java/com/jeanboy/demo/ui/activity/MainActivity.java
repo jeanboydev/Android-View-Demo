@@ -1,19 +1,19 @@
-package com.jeanboy.demo.app.activity;
+package com.jeanboy.demo.ui.activity;
 
 import android.support.v7.widget.Toolbar;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.jeanboy.demo.app.R;
-import com.jeanboy.demo.app.base.BaseActivity;
-import com.jeanboy.demo.app.presenter.UserPresenter;
-import com.jeanboy.demo.app.view.IUserView;
+import com.jeanboy.demo.R;
+import com.jeanboy.demo.ui.base.BaseActivity;
+import com.jeanboy.demo.presenter.UserPresenter;
+import com.jeanboy.demo.ui.view.UserView;
 
 import butterknife.Bind;
 import butterknife.OnClick;
 
-public class MainActivity extends BaseActivity implements IUserView {
+public class MainActivity extends BaseActivity implements UserView {
 
     @Bind(R.id.et_username)
     EditText et_username;

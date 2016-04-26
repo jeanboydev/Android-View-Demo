@@ -1,9 +1,9 @@
-package com.jeanboy.demo.app.view;
+package com.jeanboy.demo.ui.view;
 
 /**
  * Created by JeanBoy on 2016/4/26.
  */
-public interface IUserView {
+public interface UserView {
 
     void toast(String msg);
 

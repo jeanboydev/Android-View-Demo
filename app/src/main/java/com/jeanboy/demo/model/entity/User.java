@@ -1,9 +1,9 @@
-package com.jeanboy.demo.app.bean;
+package com.jeanboy.demo.model.entity;
 
 /**
  * Created by JeanBoy on 2016/4/26.
  */
-public class UserBean {
+public class User {
 
     private long id;
     private String username;
