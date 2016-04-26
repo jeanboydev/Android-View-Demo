@@ -1,11 +1,72 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:configChanges">keyboardHidden</item>
+        <item name="android:windowSoftInputMode">stateHidden</item>
     </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="ToolBarTitleTextStyle" parent="android:Widget.Holo.Light.TextView">
+        <item name="android:textSize">@dimen/text_20sp</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="ToolBarButtonTextStyle" parent="android:Widget.Holo.Light.Button">
+        <item name="android:textSize">@dimen/text_16sp</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:background">@drawable/common_btn_selector</item>
+    </style>
+
+    <style name="ButtonNormalStyle" parent="android:Widget.Holo.Light.Button">
+        <item name="android:textSize">@dimen/text_14sp</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:background">@drawable/common_btn_selector</item>
+    </style>
+
+    <style name="TextNormalEditStyle" parent="android:Widget.Holo.Light.TextView">
+        <item name="android:textSize">@dimen/text_14sp</item>
+        <item name="android:textColor">@color/common_text</item>
+        <item name="android:textColorHint">@color/common_text_hint</item>
+        <item name="android:paddingLeft">8dp</item>
+        <item name="android:paddingRight">8dp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
+    <style name="TextTitleStyle" parent="android:Widget.Holo.Light.TextView">
+        <item name="android:textSize">@dimen/text_16sp</item>
+        <item name="android:textColor">@color/common_text</item>
+    </style>
+
+    <style name="TextTitleBoldStyle" parent="android:Widget.Holo.Light.TextView">
+        <item name="android:textSize">@dimen/text_16sp</item>
+        <item name="android:textColor">@color/common_text</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextNormalStyle" parent="android:Widget.Holo.Light.TextView">
+        <item name="android:textSize">@dimen/text_14sp</item>
+        <item name="android:textColor">@color/common_text</item>
+    </style>
+
+    <style name="TextNormalLinkStyle" parent="android:Widget.Holo.Light.TextView">
+        <item name="android:textSize">@dimen/text_14sp</item>
+        <item name="android:textColor">@color/common_text_link</item>
+    </style>
+
+    <style name="TextNoteStyle" parent="android:Widget.Holo.Light.TextView">
+        <item name="android:textSize">@dimen/text_12sp</item>
+        <item name="android:textColor">@color/common_text_light</item>
+    </style>
+
 
 </resources>
