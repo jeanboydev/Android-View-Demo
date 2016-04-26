@@ -1,6 +1,7 @@
 package com.jeanboy.demo.app.base;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -20,6 +21,16 @@ public abstract class BaseActivity extends AppCompatActivity {
         TAG = this.getClass().getSimpleName();
     }
 
+    public abstract Class getTag(Class clazz);
+
+    public abstract int getLayoutId();
+
+    public abstract void setupView();
+
+    public abstract void setupActionBar();
+
+    public abstract void initData();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,18 +43,14 @@ public abstract class BaseActivity extends AppCompatActivity {
             toolbar.setTitle("");
             setSupportActionBar(toolbar);
         }
-        initData();
     }
 
-    public abstract Class getTag(Class clazz);
 
-    public abstract int getLayoutId();
-
-    public abstract void setupView();
-
-    public abstract void setupActionBar();
-
-    public abstract void initData();
+    @Override
+    protected void onPostCreate(@Nullable Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        initData();
+    }
 
 
     /**
