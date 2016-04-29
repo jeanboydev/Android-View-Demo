@@ -1,11 +1,21 @@
 package com.jeanboy.demo.ui.base;
 
+import android.app.Activity;
+import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jeanboy.demo.R;
@@ -80,6 +90,8 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
         return mToolbar;
     }
+
+
 
     /**
      * tool bar back button operation

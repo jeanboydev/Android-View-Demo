@@ -10,6 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
+        android:fitsSystemWindows="true"
         app:contentInsetLeft="0dp"
         app:contentInsetStart="0dp"
         app:elevation="0dp"

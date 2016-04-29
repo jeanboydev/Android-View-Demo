@@ -1,5 +1,6 @@
 package com.jeanboy.demo.ui.activity;
 
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.MenuItemCompat;
@@ -12,6 +13,7 @@ import android.view.MenuItem;
 
 import com.jeanboy.demo.R;
 import com.jeanboy.demo.ui.base.BaseActivity;
+import com.jeanboy.demo.utils.ToolBarUtil;
 
 import butterknife.Bind;
 
@@ -21,6 +23,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     DrawerLayout mDrawerLayout;
     @Bind(R.id.navigation)
     NavigationView mNavigationView;
+    @Bind(R.id.coordinator_layout)
+    CoordinatorLayout mCoordinatorLayout;
 
     private ActionBarDrawerToggle mDrawerToggle;
 
@@ -39,12 +43,16 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         if (getToolbarTitleView() != null) {
             getToolbarTitleView().setText("首页");
         }
+
+
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, getToolbar(),
                 R.string.drawer_open, R.string.drawer_close);
         mDrawerLayout.addDrawerListener(mDrawerToggle);
         mDrawerToggle.syncState();
 
         mNavigationView.setNavigationItemSelectedListener(this);
+
+        ToolBarUtil.setDrawerToolbarTabLayout(this, mCoordinatorLayout);
     }
 
     @Override
@@ -61,7 +69,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         getMenuInflater().inflate(R.menu.activity_main_search, menu);
         MenuItem searchItem = menu.findItem(R.id.action_search);
         SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
-//        searchView.setIconified(false);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
