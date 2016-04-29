@@ -1,5 +1,6 @@
 package com.jeanboy.demo.ui.activity;
 
+import android.content.Intent;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -10,12 +11,14 @@ import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 
 import com.jeanboy.demo.R;
 import com.jeanboy.demo.ui.base.BaseActivity;
 import com.jeanboy.demo.utils.ToolBarUtil;
 
 import butterknife.Bind;
+import butterknife.OnClick;
 
 public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -23,8 +26,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     DrawerLayout mDrawerLayout;
     @Bind(R.id.navigation)
     NavigationView mNavigationView;
+
     @Bind(R.id.coordinator_layout)
     CoordinatorLayout mCoordinatorLayout;
+
 
     private ActionBarDrawerToggle mDrawerToggle;
 
@@ -44,9 +49,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             getToolbarTitleView().setText("首页");
         }
 
-
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, getToolbar(),
-                R.string.drawer_open, R.string.drawer_close);
+                R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         mDrawerLayout.addDrawerListener(mDrawerToggle);
         mDrawerToggle.syncState();
 
@@ -110,6 +114,11 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     @Override
     public void initData() {
 
+    }
+
+    @OnClick(R.id.btn_tab)
+    public void toTabLayoutActivity() {
+        startActivity(new Intent(this, TabLayoutActivity.class));
     }
 
 

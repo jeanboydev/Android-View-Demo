@@ -17,6 +17,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.activity.SplashActivity" />
+        <activity android:name=".ui.activity.TabLayoutActivity"></activity>
     </application>
 
 </manifest>
