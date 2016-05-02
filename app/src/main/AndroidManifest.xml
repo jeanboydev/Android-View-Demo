@@ -17,7 +17,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.activity.SplashActivity" />
-        <activity android:name=".ui.activity.TabLayoutActivity"></activity>
+        <activity android:name=".ui.activity.TabLayoutActivity" />
+        <activity android:name=".ui.activity.FadeOutInfoActivity"></activity>
     </application>
 
 </manifest>

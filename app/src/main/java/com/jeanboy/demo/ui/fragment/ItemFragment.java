@@ -3,7 +3,7 @@ package com.jeanboy.demo.ui.fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,6 +14,7 @@ import com.jeanboy.demo.R;
 import com.jeanboy.demo.model.entity.DummyContent;
 import com.jeanboy.demo.ui.adapter.ItemAdapter;
 import com.jeanboy.demo.ui.listener.OnListFragmentInteractionListener;
+import com.jeanboy.demo.utils.DividerItemDecoration;
 
 /**
  * A fragment representing a list of Items.
@@ -64,13 +65,17 @@ public class ItemFragment extends Fragment {
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
             RecyclerView recyclerView = (RecyclerView) view;
-            if (mColumnCount <= 1) {
+//            if (mColumnCount <= 1) {
                 recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            } else {
-                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
-            }
+//            } else {
+//                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
+//            }
+
+            recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
             recyclerView.setAdapter(new ItemAdapter(DummyContent.ITEMS, mListener));
+            recyclerView.setItemAnimator(new DefaultItemAnimator());
         }
+
         return view;
     }
 

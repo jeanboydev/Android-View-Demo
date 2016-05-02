@@ -1,15 +1,12 @@
 package com.jeanboy.demo.ui.activity;
 
+import android.content.Intent;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.view.View;
 
 import com.jeanboy.demo.R;
 import com.jeanboy.demo.model.entity.DummyContent;
@@ -74,7 +71,7 @@ public class TabLayoutActivity extends BaseActivity implements OnListFragmentInt
 
     @Override
     public void onListFragmentInteraction(DummyContent.DummyItem item) {
-
+        startActivity(new Intent(this, FadeOutInfoActivity.class));
     }
 
     class MyFragmentAdapter extends FragmentPagerAdapter {
