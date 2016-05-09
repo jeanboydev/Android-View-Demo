@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="RefreshLayout">
+        <attr name="refresh_header" format="reference" />
+        <attr name="refresh_footer" format="reference" />
+    </declare-styleable>
+
+</resources>

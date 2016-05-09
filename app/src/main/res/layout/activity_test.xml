@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.jeanboy.demo.ui.activity.TestActivity">
+
+    <com.jeanboy.demo.ui.view.pulltorefresh.RefreshLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:refresh_header="@layout/view_refresh_header">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:background="@android:color/holo_red_dark">
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:background="@android:color/holo_green_dark">
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:background="@android:color/holo_blue_dark">
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+        <!--<ListView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent">-->
+
+        <!--</ListView>-->
+
+    </com.jeanboy.demo.ui.view.pulltorefresh.RefreshLayout>
+
+
+</RelativeLayout>
