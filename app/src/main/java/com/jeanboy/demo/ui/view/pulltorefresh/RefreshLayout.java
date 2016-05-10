@@ -3,6 +3,7 @@ package com.jeanboy.demo.ui.view.pulltorefresh;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -10,6 +11,7 @@ import android.view.VelocityTracker;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Scroller;
 import android.widget.TextView;
 
@@ -100,6 +102,15 @@ public class RefreshLayout extends ViewGroup {
         mPagingTouchSlop = conf.getScaledTouchSlop() * 2;
         mMaximumVelocity = conf.getScaledMaximumFlingVelocity();
         mHeaderHeight = 500;// FIXME: 2016/5/6
+
+        mScreenHeight = getScreenHeight(context);
+    }
+
+    public static int getScreenHeight(Context context) {
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        DisplayMetrics outMetrics = new DisplayMetrics();
+        wm.getDefaultDisplay().getMetrics(outMetrics);
+        return outMetrics.heightPixels;
     }
 
     @Override
@@ -161,7 +172,7 @@ public class RefreshLayout extends ViewGroup {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         if (mHeaderView != null) {
 //            measureChildWithMargins(mHeaderView, widthMeasureSpec, 0, heightMeasureSpec, 0);//测量header中的子view
-//            MarginLayoutParams lp = (MarginLayoutParams) mHeaderView.getLayoutParams();
+//            final MarginLayoutParams lp = (MarginLayoutParams) mHeaderView.getLayoutParams();
 //            mHeaderHeight = mHeaderView.getMeasuredHeight() + lp.topMargin + lp.bottomMargin;
 //            refreshIndicator.setHeaderHeight(mHeaderHeight);
         }
@@ -177,7 +188,7 @@ public class RefreshLayout extends ViewGroup {
         int childHeightMeasureSpec = getChildMeasureSpec(parentHeightMeasureSpec,
                 getPaddingTop() + getPaddingBottom(), lp.height);
 
-//        MarginLayoutParams lp = (MarginLayoutParams) child.getLayoutParams();
+//        final MarginLayoutParams lp = (MarginLayoutParams) child.getLayoutParams();
 //        int childWidthMeasureSpec = getChildMeasureSpec(parentWidthMeasureSpec,
 //                getPaddingLeft() + getPaddingRight() + lp.leftMargin + lp.rightMargin, lp.width);
 //        int childHeightMeasureSpec = getChildMeasureSpec(parentHeightMeasureSpec,
@@ -193,7 +204,7 @@ public class RefreshLayout extends ViewGroup {
         int paddingTop = getPaddingTop();
 
         if (mHeaderView != null) {
-//            MarginLayoutParams lp = (MarginLayoutParams) mHeaderView.getLayoutParams();
+//            final MarginLayoutParams lp = (MarginLayoutParams) mHeaderView.getLayoutParams();
 //            int left = paddingLeft + lp.leftMargin;
 //            int top = paddingTop + lp.topMargin + offsetY - mHeaderHeight;
 
@@ -210,7 +221,7 @@ public class RefreshLayout extends ViewGroup {
             int left = paddingLeft;
             int top = paddingTop + offsetY;
 
-//            MarginLayoutParams lp = (MarginLayoutParams) mContent.getLayoutParams();
+//            final MarginLayoutParams lp = (MarginLayoutParams) mContent.getLayoutParams();
 //            int left = paddingLeft + lp.leftMargin;
 //            int top = paddingTop + lp.topMargin + offsetY;
             int right = left + mContent.getMeasuredWidth();
@@ -219,114 +230,165 @@ public class RefreshLayout extends ViewGroup {
         }
     }
 
+    int mLastY = 0;
+    int mStart = 0;
+    int mEnd = 0;
+    int mScreenHeight = 0;
+
     @Override
-    public boolean onInterceptTouchEvent(MotionEvent ev) {
-        int action = ev.getAction();
-        if ((action == MotionEvent.ACTION_MOVE) && (mTouchStatus != TOUCH_STATE_DEFAULT)) {
-            return true;
-        }
-        int y = (int) ev.getY();
-        switch (action) {
-            case MotionEvent.ACTION_MOVE:
-                int xDiff = Math.abs(mLastMotionY - y);
-                if (xDiff > mPagingTouchSlop) {// 超过了最小滑动距离
-                    mTouchStatus = TOUCH_STATE_SCROLLING;
-                }
-                break;
-            case MotionEvent.ACTION_POINTER_DOWN:
-                mPointerId = ev.getPointerId(ev.getActionIndex()); //记录当前pointId
-                break;
+    public boolean onTouchEvent(MotionEvent event) {
+        int y = (int) event.getY();
+        switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                mLastMotionY = y;
-                if (!mScroller.isFinished()) {//当动画还没有结束的时候强制结束
-                    mScroller.abortAnimation();
-                    mScroller.forceFinished(true);
-                }
-                mTouchStatus = TOUCH_STATE_DEFAULT;
+                mLastY = y;
+                mStart = getScrollY();//记录按下位置
                 break;
-
-            case MotionEvent.ACTION_CANCEL:
+            case MotionEvent.ACTION_MOVE:
+                if (!mScroller.isFinished()) {
+                    mScroller.abortAnimation();
+                }
+                int dy = mLastY - y;
+                if (getScrollY() < 0) {
+                    dy = 0;
+                }
+                if (getScrollY() > getHeight() - mScreenHeight) {
+                    dy = 0;
+                }
+                scrollBy(0, dy);//随手指滚动 dy
+                mLastY = y;
+                break;
             case MotionEvent.ACTION_UP:
-                mTouchStatus = TOUCH_STATE_DEFAULT;
+                mEnd = getScrollY();
+                int dScrollY = mEnd - mStart;
+                if (dScrollY > 0) {//上滑
+                    if (dScrollY < mScreenHeight / 3) {//小于一定距离, 滚回去
+                        mScroller.startScroll(0, getScrollY(), 0, -dScrollY);
+                    } else {//大于，则滚动完剩余的距离
+                        mScroller.startScroll(0, getScrollY(), 0, mScreenHeight - dScrollY);
+                    }
+                } else {//同理
+                    if (-dScrollY < mScreenHeight / 3) {
+                        mScroller.startScroll(0, getScrollY(), 0, -dScrollY);
+                    } else {
+                        mScroller.startScroll(0, getScrollY(), 0, -mScreenHeight - dScrollY);
+                    }
+                }
                 break;
         }
-
-        return mTouchStatus != TOUCH_STATE_DEFAULT;
+        postInvalidate();
+        return true;
     }
+
+
+//    @Override
+//    public boolean onInterceptTouchEvent(MotionEvent ev) {
+//        int action = ev.getAction();
+//        if ((action == MotionEvent.ACTION_MOVE) && (mTouchStatus != TOUCH_STATE_DEFAULT)) {
+//            return true;
+//        }
+//        int y = (int) ev.getY();
+//        switch (action) {
+//            case MotionEvent.ACTION_MOVE:
+//                int xDiff = Math.abs(mLastMotionY - y);
+//                if (xDiff > mPagingTouchSlop) {// 超过了最小滑动距离
+//                    mTouchStatus = TOUCH_STATE_SCROLLING;
+//                }
+//                break;
+//            case MotionEvent.ACTION_POINTER_DOWN:
+//                mPointerId = ev.getPointerId(ev.getActionIndex()); //记录当前pointId
+//                break;
+//            case MotionEvent.ACTION_DOWN:
+//                mLastMotionY = y;
+//                if (!mScroller.isFinished()) {//当动画还没有结束的时候强制结束
+//                    mScroller.abortAnimation();
+//                    mScroller.forceFinished(true);
+//                }
+//                mTouchStatus = TOUCH_STATE_DEFAULT;
+//                break;
+//
+//            case MotionEvent.ACTION_CANCEL:
+//            case MotionEvent.ACTION_UP:
+//                mTouchStatus = TOUCH_STATE_DEFAULT;
+//                break;
+//        }
+//
+//        return mTouchStatus != TOUCH_STATE_DEFAULT;
+//    }
 
     public boolean dispatchTouchEventSupper(MotionEvent ev) {
         return super.dispatchTouchEvent(ev);
     }
 
-    @Override
-    public boolean onTouchEvent(MotionEvent ev) {
-//        if (!isEnabled() || mContent == null || mHeaderView == null) {
-//            return dispatchTouchEventSupper(ev);
+//    @Override
+//    public boolean onTouchEvent(MotionEvent ev) {
+////        if (!isEnabled() || mContent == null || mHeaderView == null) {
+////            return dispatchTouchEventSupper(ev);
+////        }
+//        if (mVelocityTracker == null) {
+//            mVelocityTracker = VelocityTracker.obtain();
 //        }
-        if (mVelocityTracker == null) {
-            mVelocityTracker = VelocityTracker.obtain();
-        }
-        mVelocityTracker.addMovement(ev);
-
-        int touchIndex = ev.getActionIndex();
-        switch (ev.getAction()) {
-            case MotionEvent.ACTION_UP:
-                mVelocityTracker.computeCurrentVelocity(1000);
-                if (Math.abs(mVelocityTracker.getYVelocity()) > mMaximumVelocity && !checkIsBroad()) {
-                    mScroller.fling(getScrollX(), getScrollY(), 0, -(int) mVelocityTracker.getYVelocity(), 0, 0, 0, mTotalLength - getHeight());
-                } else {
-                    actionUP(); //回弹效果
-                }
-
-                mTouchStatus = TOUCH_STATE_DEFAULT;
-                break;
-            case MotionEvent.ACTION_POINTER_UP://添加多点触控的支持
-                if (ev.getPointerId(touchIndex) == mPointerId) {
-                    int newIndex = touchIndex == 0 ? 1 : 0;
-                    mPointerId = ev.getPointerId(newIndex);
-                    mLastMotionY = (int) (ev.getY(newIndex) + 0.5f);
-                }
-                break;
-            case MotionEvent.ACTION_CANCEL:
-                mTouchStatus = TOUCH_STATE_DEFAULT;
-                break;
-            case MotionEvent.ACTION_DOWN:
-                mPointerId = ev.getPointerId(0);
-                mLastMotionY = (int) ev.getY();//记录按下的点
-                break;
-            case MotionEvent.ACTION_POINTER_DOWN: //添加多点触控的处理
-                mPointerId = ev.getPointerId(touchIndex);
-                mLastMotionY = (int) (ev.getY(touchIndex) + 0.5f); //记录按下的点
-                break;
-            case MotionEvent.ACTION_MOVE:
-                touchIndex = ev.findPointerIndex(mPointerId);
-                if (touchIndex < 0) //当前index小于0就返false继续接受下一次事件
-                    return false;
-                int scrollY = (int) (mLastMotionY - ev.getY(touchIndex)); //计算滑动的距离
-                scrollBy(0, scrollY); //调用滑动函数
-                mLastMotionY = (int) ev.getY(touchIndex); //记录上一次按下的点
-                break;
-        }
-        return true;
-    }
-
-    private void actionUP() {
-        if (getScrollY() < 0 || getHeight() > mTotalLength) {//顶部回弹
-            mScroller.startScroll(0, getScrollY(), 0, -getScrollY()); //开启回弹效果
-            invalidate();
-        } else if (getScrollY() + getHeight() > mTotalLength) {//底部回弹
-            //开启底部回弹
-            mScroller.startScroll(0, getScrollY(), 0, -(getScrollY() + getHeight() - mTotalLength));
-            invalidate();
-        }
-    }
-
-    private boolean checkIsBroad() {
-        return getScrollY() < 0 || getScrollY() + getHeight() > mTotalLength;
-    }
+//        mVelocityTracker.addMovement(ev);
+//
+//        int touchIndex = ev.getActionIndex();
+//        switch (ev.getAction()) {
+//            case MotionEvent.ACTION_UP:
+//                mVelocityTracker.computeCurrentVelocity(1000);
+//                if (Math.abs(mVelocityTracker.getYVelocity()) > mMaximumVelocity && !checkIsBroad()) {
+//                    mScroller.fling(getScrollX(), getScrollY(), 0, -(int) mVelocityTracker.getYVelocity(), 0, 0, 0, mTotalLength - getHeight());
+//                } else {
+//                    actionUP(); //回弹效果
+//                }
+//
+//                mTouchStatus = TOUCH_STATE_DEFAULT;
+//                break;
+//            case MotionEvent.ACTION_POINTER_UP://添加多点触控的支持
+//                if (ev.getPointerId(touchIndex) == mPointerId) {
+//                    int newIndex = touchIndex == 0 ? 1 : 0;
+//                    mPointerId = ev.getPointerId(newIndex);
+//                    mLastMotionY = (int) (ev.getY(newIndex) + 0.5f);
+//                }
+//                break;
+//            case MotionEvent.ACTION_CANCEL:
+//                mTouchStatus = TOUCH_STATE_DEFAULT;
+//                break;
+//            case MotionEvent.ACTION_DOWN:
+//                mPointerId = ev.getPointerId(0);
+//                mLastMotionY = (int) ev.getY();//记录按下的点
+//                break;
+//            case MotionEvent.ACTION_POINTER_DOWN: //添加多点触控的处理
+//                mPointerId = ev.getPointerId(touchIndex);
+//                mLastMotionY = (int) (ev.getY(touchIndex) + 0.5f); //记录按下的点
+//                break;
+//            case MotionEvent.ACTION_MOVE:
+//                touchIndex = ev.findPointerIndex(mPointerId);
+//                if (touchIndex < 0) //当前index小于0就返false继续接受下一次事件
+//                    return false;
+//                int scrollY = (int) (mLastMotionY - ev.getY(touchIndex)); //计算滑动的距离
+//                scrollBy(0, scrollY); //调用滑动函数
+//                mLastMotionY = (int) ev.getY(touchIndex); //记录上一次按下的点
+//                break;
+//        }
+//        return true;
+//    }
+//
+//    private void actionUP() {
+//        if (getScrollY() < 0 || getHeight() > mTotalLength) {//顶部回弹
+//            mScroller.startScroll(0, getScrollY(), 0, -getScrollY()); //开启回弹效果
+//            invalidate();
+//        } else if (getScrollY() + getHeight() > mTotalLength) {//底部回弹
+//            //开启底部回弹
+//            mScroller.startScroll(0, getScrollY(), 0, -(getScrollY() + getHeight() - mTotalLength));
+//            invalidate();
+//        }
+//    }
+//
+//    private boolean checkIsBroad() {
+//        return getScrollY() < 0 || getScrollY() + getHeight() > mTotalLength;
+//    }
 
     @Override
     public void computeScroll() {
+        super.computeScroll();
         if (mScroller.computeScrollOffset()) {
             scrollTo(mScroller.getCurrX(), mScroller.getCurrY());
             postInvalidate();
