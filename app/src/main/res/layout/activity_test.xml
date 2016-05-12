@@ -6,83 +6,83 @@
     android:layout_height="match_parent"
     tools:context="com.jeanboy.demo.ui.activity.TestActivity">
 
-    <!--<com.jeanboy.demo.ui.view.pulltorefresh.RefreshLayout-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"-->
-    <!--app:refresh_header="@layout/view_refresh_header">-->
-
-
-    <!--<LinearLayout-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:orientation="vertical">-->
-
-    <!--<LinearLayout-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="100dp"-->
-    <!--android:background="@android:color/holo_red_dark">-->
-
-
-    <!--</LinearLayout>-->
-
-    <!--<LinearLayout-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="100dp"-->
-    <!--android:background="@android:color/holo_green_dark">-->
-
-
-    <!--</LinearLayout>-->
-
-    <!--<LinearLayout-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="200dp"-->
-    <!--android:background="@android:color/holo_blue_dark">-->
-
-
-    <!--</LinearLayout>-->
-
-    <!--</LinearLayout>-->
-    <!--&lt;!&ndash;<ListView&ndash;&gt;-->
-    <!--&lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;-->
-    <!--&lt;!&ndash;android:layout_height="match_parent">&ndash;&gt;-->
-
-    <!--&lt;!&ndash;</ListView>&ndash;&gt;-->
-
-    <!--</com.jeanboy.demo.ui.view.pulltorefresh.RefreshLayout>-->
-
-    <com.jeanboy.demo.ui.view.test.DragLayout
+    <com.jeanboy.demo.ui.view.pulltorefresh.RefreshLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        app:refresh_header="@layout/view_refresh_header">
 
-        <TextView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_gravity="center"
-            android:layout_margin="10dp"
-            android:background="#44ff0000"
-            android:gravity="center"
-            android:text="I can be dragged !" />
 
-        <TextView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_gravity="center"
-            android:layout_margin="10dp"
-            android:background="#44ff0000"
-            android:gravity="center"
-            android:text="I can be dragged !" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-        <TextView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_gravity="center"
-            android:layout_margin="10dp"
-            android:background="#44ff0000"
-            android:gravity="center"
-            android:text="I can be dragged !" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:background="@android:color/holo_red_dark">
 
-    </com.jeanboy.demo.ui.view.test.DragLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:background="@android:color/holo_green_dark">
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:background="@android:color/holo_blue_dark">
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+        <!--<ListView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent">-->
+
+        <!--</ListView>-->
+
+    </com.jeanboy.demo.ui.view.pulltorefresh.RefreshLayout>
+
+    <!--<com.jeanboy.demo.ui.view.test.DragLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:orientation="vertical">-->
+
+    <!--<TextView-->
+    <!--android:layout_width="100dp"-->
+    <!--android:layout_height="100dp"-->
+    <!--android:layout_gravity="center"-->
+    <!--android:layout_margin="10dp"-->
+    <!--android:background="#44ff0000"-->
+    <!--android:gravity="center"-->
+    <!--android:text="I can be dragged !" />-->
+
+    <!--<TextView-->
+    <!--android:layout_width="100dp"-->
+    <!--android:layout_height="100dp"-->
+    <!--android:layout_gravity="center"-->
+    <!--android:layout_margin="10dp"-->
+    <!--android:background="#44ff0000"-->
+    <!--android:gravity="center"-->
+    <!--android:text="I can be dragged !" />-->
+
+    <!--<TextView-->
+    <!--android:layout_width="100dp"-->
+    <!--android:layout_height="100dp"-->
+    <!--android:layout_gravity="center"-->
+    <!--android:layout_margin="10dp"-->
+    <!--android:background="#44ff0000"-->
+    <!--android:gravity="center"-->
+    <!--android:text="I can be dragged !" />-->
+
+    <!--</com.jeanboy.demo.ui.view.test.DragLayout>-->
 
 
 </RelativeLayout>
