@@ -17,4 +17,6 @@ public interface UserView {
         void updateInfo(User user);
     }
 
+
+
 }

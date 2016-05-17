@@ -32,4 +32,9 @@ public class UserModel implements UserModelImpl {
 
     }
 
+    @Override
+    public void getInfo(long userId, Callback callback) {
+
+    }
+
 }
