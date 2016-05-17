@@ -13,5 +13,8 @@ public interface UserModelImpl {
 
     User getFromService(long id);
 
-    void login(String username, String password);
+
+    void login(String username, String password, Callback callback);
+
+    void getInfo(long userId, Callback callback);
 }

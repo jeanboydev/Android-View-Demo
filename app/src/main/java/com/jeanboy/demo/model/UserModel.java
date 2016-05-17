@@ -1,6 +1,7 @@
 package com.jeanboy.demo.model;
 
 import com.jeanboy.demo.model.entity.User;
+import com.jeanboy.demo.model.impl.Callback;
 import com.jeanboy.demo.model.impl.UserModelImpl;
 
 /**
@@ -25,7 +26,10 @@ public class UserModel implements UserModelImpl {
     }
 
     @Override
-    public void login(String username, String password) {
+    public void login(String username, String password, Callback callback) {
+
+
 
     }
+
 }

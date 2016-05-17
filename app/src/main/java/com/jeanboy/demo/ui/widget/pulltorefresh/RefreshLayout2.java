@@ -1,4 +1,4 @@
-package com.jeanboy.demo.ui.view.pulltorefresh;
+package com.jeanboy.demo.ui.widget.pulltorefresh;
 
 import android.content.Context;
 import android.content.res.TypedArray;

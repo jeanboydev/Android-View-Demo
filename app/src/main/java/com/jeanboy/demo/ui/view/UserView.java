@@ -1,14 +1,20 @@
 package com.jeanboy.demo.ui.view;
 
+import com.jeanboy.demo.model.entity.User;
+
 /**
  * Created by JeanBoy on 2016/4/26.
  */
 public interface UserView {
 
-    void toast(String msg);
+    interface Login extends BaseView {
+        void loginSuccess(User user);
+    }
 
-    void showProgress(String msg);
+    interface Info extends BaseView {
+        void getInfo(User user);
 
-    void setUsername(String username);
+        void updateInfo(User user);
+    }
 
 }

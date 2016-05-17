@@ -1,4 +1,4 @@
-package com.jeanboy.demo.ui.view.test;
+package com.jeanboy.demo.ui.widget.test;
 
 import android.content.Context;
 import android.graphics.Point;
