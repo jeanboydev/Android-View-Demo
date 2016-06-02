@@ -22,15 +22,15 @@
         <activity android:name=".ui.activity.TabLayoutActivity" />
         <activity android:name=".ui.activity.FadeOutInfoActivity" />
         <activity android:name=".ui.activity.TestActivity">
-
-        </activity>
-        <activity android:name=".ui.activity.Main2Activity" />
-        <activity android:name=".ui.activity.AnimationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".ui.activity.Main2Activity" />
+        <activity android:name=".ui.activity.AnimationActivity">
+
         </activity>
     </application>
 

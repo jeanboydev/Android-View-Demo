@@ -7,4 +7,16 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+
+
+    <string name="msg_pull_down">下拉刷新</string>
+    <string name="msg_pull_down_to_refresh">下拉刷新</string>
+    <string name="msg_release_to_refresh">释放立即刷新</string>
+    <string name="msg_refreshing">正在刷新&#8230;</string>
+    <string name="msg_refresh_complete">更新完成</string>
+
+    <string name="msg_last_update">上次更新于&#160;</string>
+    <string name="msg_seconds_ago">刚刚更新</string>
+    <string name="msg_minutes_ago">&#160;分钟前</string>
+    <string name="msg_hours_ago">&#160;小时前</string>
 </resources>
