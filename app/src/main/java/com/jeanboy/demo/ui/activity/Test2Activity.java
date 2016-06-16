@@ -1,20 +1,30 @@
 package com.jeanboy.demo.ui.activity;
 
+import android.animation.Animator;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.graphics.Palette;
 import android.view.View;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jeanboy.demo.R;
 import com.skyfishjy.library.RippleBackground;
 
+import java.util.ArrayList;
+
 import tyrantgit.explosionfield.ExplosionField;
 
 public class Test2Activity extends AppCompatActivity {
+
+    private RelativeLayout ll_body;
 
     private RippleBackground rippleBackground;
 
@@ -28,8 +38,9 @@ public class Test2Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test2);
 
-        mExplosionField=ExplosionField.attach2Window(this);
+        mExplosionField = ExplosionField.attach2Window(this);
 
+        ll_body = (RelativeLayout) findViewById(R.id.ll_body);
         rippleBackground = (RippleBackground) findViewById(R.id.content);
         tv_test1 = (TextView) findViewById(R.id.tv_test1);
         tv_test2 = (TextView) findViewById(R.id.tv_test2);
@@ -120,5 +131,65 @@ public class Test2Activity extends AppCompatActivity {
 //        animatorSet.playTogether(animatorList);
 //        foundDevice.setVisibility(View.VISIBLE);
 //        animatorSet.start();
+    }
+
+    public void addOne(final View view) {
+
+        final RippleBackground ripple = new RippleBackground(this);
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(500, 500);
+        params.topMargin = 200;
+        params.leftMargin = 400;
+        ripple.setLayoutParams(params);
+        ripple.setRippleColor(Color.RED);
+        ripple.setBackgroundColor(Color.BLUE);
+        ripple.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (ripple.isRippleAnimationRunning()) {
+                    ripple.stopRippleAnimation();
+                    mExplosionField.explode(v);
+                } else {
+                    ripple.startRippleAnimation();
+                }
+            }
+        });
+
+        ll_body.addView(ripple);
+
+        AnimatorSet animatorSet = new AnimatorSet();
+        animatorSet.setDuration(3000);
+        animatorSet.setInterpolator(new AccelerateDecelerateInterpolator());
+
+        ArrayList<Animator> animators = new ArrayList<>();
+        ObjectAnimator scaleXAnimator = ObjectAnimator.ofFloat(ripple, "ScaleX", 0f, 1.2f, 1f);
+        ObjectAnimator scaleYAnimator = ObjectAnimator.ofFloat(ripple, "ScaleY", 0f, 1.2f, 1f);
+        animators.add(scaleXAnimator);
+        animators.add(scaleYAnimator);
+
+        animatorSet.playTogether(animators);
+        animatorSet.start();
+        animatorSet.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+//                ripple.setRippleColor(Color.RED);
+//                ripple.startRippleAnimation();
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
+
     }
 }

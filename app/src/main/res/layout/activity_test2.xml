@@ -1,9 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ll_body"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.jeanboy.demo.ui.activity.Test2Activity">
+
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:background="@android:drawable/btn_default"
+        android:onClick="addOne"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:text="添加" />
+
 
     <com.skyfishjy.library.RippleBackground xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"

@@ -1,13 +1,14 @@
-package com.skyfishjy.library;
+package com.jeanboy.demo.ui.widget;
 
 import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.RelativeLayout;
@@ -15,63 +16,47 @@ import android.widget.RelativeLayout;
 import java.util.ArrayList;
 
 /**
- * Created by fyu on 11/3/14.
+ * Created by Next on 2016/6/16.
  */
-
-public class RippleBackground extends RelativeLayout {
+public class RippleLayout extends RelativeLayout {
 
     private static final int DEFAULT_RIPPLE_COUNT = 6;
     private static final int DEFAULT_DURATION_TIME = 3000;
     private static final float DEFAULT_SCALE = 6.0f;
     private static final int DEFAULT_FILL_TYPE = 0;
 
-    private int rippleColor;
-    private float rippleStrokeWidth;
-    private float rippleRadius;
-    private int rippleDurationTime;
-    private int rippleAmount;
+    private int rippleColor = Color.BLACK;//波纹颜色
+    private float rippleStrokeWidth;//波纹宽度
+    private float rippleRadius;//波纹半径
+    private int rippleDurationTime = DEFAULT_DURATION_TIME;//持续时间
+    private int rippleAmount = DEFAULT_RIPPLE_COUNT;//波纹数量
     private int rippleDelay;
-    private float rippleScale;
-    private int rippleType;
+    private float rippleScale = DEFAULT_SCALE;//波纹范围
+    private int rippleType = DEFAULT_FILL_TYPE;//类型：填充/环
     private Paint paint;
     private boolean animationRunning = false;
     private AnimatorSet animatorSet;
     private ArrayList<Animator> animatorList;
     private LayoutParams rippleParams;
-    private ArrayList<RippleView> rippleViewList = new ArrayList<RippleView>();
+    private ArrayList<RippleView> rippleViewList = new ArrayList<>();
 
-    public RippleBackground(Context context) {
+
+    public RippleLayout(Context context) {
         this(context, null);
     }
 
-    public RippleBackground(Context context, AttributeSet attrs) {
+    public RippleLayout(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public RippleBackground(Context context, AttributeSet attrs, int defStyleAttr) {
+    public RippleLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init(context, attrs);
-    }
 
-    private void init(final Context context, final AttributeSet attrs) {
         if (isInEditMode())
             return;
-
-//        if (null == attrs) {
-//            throw new IllegalArgumentException("Attributes should be provided to this view.");
-//        }
-
-        final TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.RippleBackground);
-        rippleColor = typedArray.getColor(R.styleable.RippleBackground_rb_color, getResources().getColor(R.color.rippelColor));
-        rippleStrokeWidth = typedArray.getDimension(R.styleable.RippleBackground_rb_strokeWidth, getResources().getDimension(R.dimen.rippleStrokeWidth));
-        rippleRadius = typedArray.getDimension(R.styleable.RippleBackground_rb_radius, getResources().getDimension(R.dimen.rippleRadius));
-        rippleDurationTime = typedArray.getInt(R.styleable.RippleBackground_rb_duration, DEFAULT_DURATION_TIME);
-        rippleAmount = typedArray.getInt(R.styleable.RippleBackground_rb_rippleAmount, DEFAULT_RIPPLE_COUNT);
-        rippleScale = typedArray.getFloat(R.styleable.RippleBackground_rb_scale, DEFAULT_SCALE);
-        rippleType = typedArray.getInt(R.styleable.RippleBackground_rb_type, DEFAULT_FILL_TYPE);
-        typedArray.recycle();
-
         rippleDelay = rippleDurationTime / rippleAmount;
+        rippleStrokeWidth = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 10, getResources().getDisplayMetrics());
+        rippleRadius = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 20, getResources().getDisplayMetrics());
 
         paint = new Paint();
         paint.setAntiAlias(true);
@@ -82,7 +67,8 @@ public class RippleBackground extends RelativeLayout {
             paint.setStyle(Paint.Style.STROKE);
         paint.setColor(rippleColor);
 
-        rippleParams = new LayoutParams((int) (2 * (rippleRadius + rippleStrokeWidth)), (int) (2 * (rippleRadius + rippleStrokeWidth)));
+        rippleParams = new LayoutParams((int) (2 * (rippleRadius + rippleStrokeWidth)),
+                (int) (2 * (rippleRadius + rippleStrokeWidth)));
         rippleParams.addRule(CENTER_IN_PARENT, TRUE);
 
         animatorSet = new AnimatorSet();
@@ -116,10 +102,6 @@ public class RippleBackground extends RelativeLayout {
         animatorSet.playTogether(animatorList);
     }
 
-    public void setRippleColor(int rippleColor) {
-        this.rippleColor = rippleColor;
-        paint.setColor(rippleColor);
-    }
 
     private class RippleView extends View {
 
@@ -154,5 +136,11 @@ public class RippleBackground extends RelativeLayout {
 
     public boolean isRippleAnimationRunning() {
         return animationRunning;
+    }
+
+
+    public void setRippleColor(int rippleColor) {
+        this.rippleColor = rippleColor;
+        paint.setColor(rippleColor);
     }
 }
