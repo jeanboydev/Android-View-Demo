@@ -10,7 +10,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.graphics.Palette;
 import android.view.View;
-import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -157,12 +157,26 @@ public class Test2Activity extends AppCompatActivity {
         ll_body.addView(ripple);
 
         AnimatorSet animatorSet = new AnimatorSet();
-        animatorSet.setDuration(3000);
-        animatorSet.setInterpolator(new AccelerateDecelerateInterpolator());
+        animatorSet.setDuration(1000);
+
+//        越来越快	AccelerateInterpolator()	@android:anim/accelerate_interpolator
+//        越来越慢	DecelerateInterpolator()	@android:anim/decelerate_interpolator
+//        先快后慢	AccelerateDecelerateInterpolator()	@android:anim/accelerate_decelerate_interpolator
+//        先后退一小步然后向前加速	AnticipateInterpolator()	@android:anim/anticipate_interpolator
+//        快速到达终点超出一小步然后回到终点	OvershootInterpolator()	@android:anim/overshoot_interpolator
+//        到达终点超出一小步然后回到终点	AnticipateOvershootInterpolator()	@android:anim/anticipate_overshoot_interpolator
+//        弹球效果，弹几下回到终点	BounceInterpolator()	@android:anim/bounce_interpolator
+//        均匀速度	LinearInterpolator()      @android:anim/linear_interpolator
+
+//        animatorSet.setInterpolator(new AccelerateDecelerateInterpolator());
+//        animatorSet.setInterpolator(new BounceInterpolator());//很有力度
+        animatorSet.setInterpolator(new LinearInterpolator());//很有力度
 
         ArrayList<Animator> animators = new ArrayList<>();
-        ObjectAnimator scaleXAnimator = ObjectAnimator.ofFloat(ripple, "ScaleX", 0f, 1.2f, 1f);
-        ObjectAnimator scaleYAnimator = ObjectAnimator.ofFloat(ripple, "ScaleY", 0f, 1.2f, 1f);
+        ObjectAnimator alphaAnimator = ObjectAnimator.ofFloat(ripple, "alpha", 0.0f, 1.0f);
+        ObjectAnimator scaleXAnimator = ObjectAnimator.ofFloat(ripple, "ScaleX", 0f, 1.1f, 1f);
+        ObjectAnimator scaleYAnimator = ObjectAnimator.ofFloat(ripple, "ScaleY", 0f, 1.1f, 1f);
+        animators.add(alphaAnimator);
         animators.add(scaleXAnimator);
         animators.add(scaleYAnimator);
 
